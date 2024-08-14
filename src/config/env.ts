@@ -25,7 +25,7 @@ const envs: IEnv = {
 	ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS?.split(',') || [
 		'http://localhost:3000',
 	],
-	APPLICATION_NAME: process.env.APPLICATION_NAME || 'Education Quiz App',
+	APPLICATION_NAME: process.env.APPLICATION_NAME || 'OnePTE',
 	API_PREFIX: process.env.API_PREFIX || '/api/v1',
 	DB_HOST: process.env.DB_HOST || 'localhost',
 	DB_PORT: parseInt(process.env.DB_PORT || '3306', 10),
