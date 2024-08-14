@@ -10,6 +10,7 @@ import {
 } from './constants';
 import { envs } from './config/env';
 import morgan from 'morgan';
+import { errorHandler } from './middleware/errorHandler';
 
 const app: Application = express();
 app.use(express.json());
@@ -66,5 +67,18 @@ app.get('/', (_req: Request, res: Response): Response => {
 		message: 'Hello from OnePTE App Backend!!!',
 	});
 });
+
+//* Middleware to handle unknown routes
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.status(HttpCode.NOT_FOUND).json({
+		success: false,
+		message: 'Not Found',
+		errors: [{ path: req.path, message: 'API Route Not Found' }],
+	});
+	next();
+});
+
+//* Global error handling middleware
+app.use(errorHandler);
 
 export { app };

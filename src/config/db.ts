@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize';
 import mysql2 from 'mysql2';
 import { envs } from './env';
+import { HttpError } from '../middleware/errorHandler';
+import { HttpCode } from '../constants';
 
 // Define the options for Sequelize
 const sequelize = new Sequelize(
@@ -34,8 +36,10 @@ const createDatabase = async (): Promise<void> => {
 		console.log('Database created successfully.');
 	} catch (error) {
 		console.error(`Error creating database: ${error}`);
-		// if (error instanceof Error)
-		// 	throw new HttpError(500, `Error creating database: ${error.message}`);
+		throw new HttpError(
+			HttpCode.INTERNAL_SERVER_ERROR,
+			`Error creating database: ${(error as Error).message}`
+		);
 	} finally {
 		connection.end();
 	}
@@ -50,25 +54,23 @@ const connectDB = async (): Promise<void> => {
 		await sequelize.authenticate();
 		console.log('Database connection has been established successfully.');
 
-		// Try to synchronize the User model with the database
+		// Try to synchronize the model with the database
 		try {
 			await sequelize.sync({ force: false }); // Set force to true to drop and recreate the table
-			console.log('Model synchronized with database');
+			console.log('Database synchronized successfully.');
 		} catch (error) {
-			console.log('Model not synchronized with database', error);
-			// if (error instanceof Error)
-			// 	throw new HttpError(
-			// 		500,
-			// 		`Database synchronization error: ${error.message}`
-			// 	);
+			console.error('Database synchronization error', error);
+			throw new HttpError(
+				HttpCode.INTERNAL_SERVER_ERROR,
+				`Database synchronization error: ${(error as Error).message}`
+			);
 		}
 	} catch (error) {
-		console.log('Unable to connect to the database', error);
-		// if (error instanceof Error)
-		// 	throw new HttpError(
-		// 		500,
-		// 		`Unable to connect to the database: ${error.message}`
-		// 	);
+		console.error('Unable to connect to the database', error);
+		throw new HttpError(
+			HttpCode.SERVICE_UNAVAILABLE,
+			`Unexpected error occurred while connecting to the database: ${(error as Error).message}`
+		);
 	}
 };
 
