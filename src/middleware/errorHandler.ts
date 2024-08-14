@@ -42,7 +42,7 @@ const errorHandler = (
 	if (err instanceof ZodError) {
 		// Handle Zod validation errors
 		status = HttpCode.BAD_REQUEST;
-		message = 'Zod Validation error';
+		message = 'Input Validation error';
 		errors = err.issues.map((issue) => ({
 			message: issue.message,
 			field: issue.path[issue.path.length - 1],
