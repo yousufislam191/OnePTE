@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 import {
 	API_REQUEST_TIMEOUT_DURATION,
 	HttpCode,
@@ -9,8 +10,8 @@ import {
 	SIXTY,
 } from './constants';
 import { envs } from './config/env';
-import morgan from 'morgan';
 import { errorHandler } from './middleware/errorHandler';
+import routes from './routes/index';
 
 const app: Application = express();
 app.use(express.json());
@@ -67,6 +68,9 @@ app.get('/', (_req: Request, res: Response): Response => {
 		message: 'Hello from OnePTE App Backend!!!',
 	});
 });
+
+//* Routes
+app.use(envs.API_PREFIX, routes);
 
 //* Middleware to handle unknown routes
 app.use((req: Request, res: Response, next: NextFunction) => {
