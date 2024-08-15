@@ -3,12 +3,13 @@ import User from '../models/user.model';
 import { hashPassword } from '../utils/encryptedPassword';
 
 class UserService {
-	public async createUser(data: IUserRegistrationInput) {
-		return await User.create({
+	public async createUser(data: IUserRegistrationInput): Promise<string> {
+		await User.create({
 			data: data.name,
 			email: data.email,
 			password: await hashPassword(data.password),
 		});
+		return 'User created successfully';
 	}
 }
 
