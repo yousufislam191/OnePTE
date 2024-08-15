@@ -7,8 +7,15 @@ import { IType } from '../interface/question.interface';
 class QuestionController extends BaseController {
 	public getQuestions = this.handleAsync(
 		async (req: Request, res: Response): Promise<void> => {
-			const type = req.query.type as IType;
-			const questions = await questionService.getAllQuestions(type);
+			const { page = '1', pageSize = '10', type } = req.query;
+			const pageNumber = parseInt(page as string, 10) || 1;
+			const pageSizeNumber = parseInt(pageSize as string, 10) || 10;
+
+			const questions = await questionService.getAllQuestions(
+				type as IType,
+				pageNumber,
+				pageSizeNumber
+			);
 
 			this.sendResponse(req, res, {
 				status: HttpCode.OK,
