@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { HttpCode } from '../constants';
 import { ILogin } from '../interface/auth.interface';
 import { IId } from '../interface/user.interface';
@@ -10,7 +10,7 @@ import { createJWT } from '../utils/createJWT';
 import { envs } from '../config/env';
 
 class AuthService {
-	public async login(req: Request, res: Response, data: ILogin): Promise<IId> {
+	public async login(res: Response, data: ILogin): Promise<IId> {
 		const isExist = await User.findOne({ where: { email: data.email } });
 		if (!isExist) {
 			throw new HttpError(
@@ -48,6 +48,10 @@ class AuthService {
 
 			return user as IId;
 		}
+	}
+
+	public async logout(res: Response): Promise<void> {
+		cookie.removeToken(res);
 	}
 }
 
