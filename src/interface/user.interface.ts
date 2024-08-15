@@ -4,3 +4,7 @@ export interface IUserRegistrationInput {
 	email: string;
 	password: string;
 }
+
+export interface IId {
+	id: number;
+}

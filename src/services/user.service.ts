@@ -5,7 +5,7 @@ import { hashPassword } from '../utils/encryptedPassword';
 class UserService {
 	public async createUser(data: IUserRegistrationInput): Promise<string> {
 		await User.create({
-			data: data.name,
+			name: data.name,
 			email: data.email,
 			password: await hashPassword(data.password),
 		});
