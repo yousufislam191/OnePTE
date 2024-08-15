@@ -5,16 +5,18 @@ import { BaseController } from '../shared/baseController';
 import { HttpCode } from '../constants';
 
 class AuthController extends BaseController {
-	public login = this.handleAsync(async (req: Request, res: Response) => {
-		const input: ILogin = req.body;
-		const result = await authService.login(input);
-		this.sendResponse(req, res, {
-			status: HttpCode.OK,
-			success: true,
-			message: 'Successfully logged in',
-			data: result,
-		});
-	});
+	public login = this.handleAsync(
+		async (req: Request, res: Response): Promise<void> => {
+			const input: ILogin = req.body;
+			const result = await authService.login(req, res, input);
+			this.sendResponse(req, res, {
+				status: HttpCode.OK,
+				success: true,
+				message: 'Successfully logged in',
+				data: result,
+			});
+		}
+	);
 }
 
 export default new AuthController();

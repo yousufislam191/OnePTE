@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import {
 	API_REQUEST_TIMEOUT_DURATION,
 	HttpCode,
@@ -16,6 +17,7 @@ import routes from './routes/index';
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Morgan middleware setup for development
 if (envs.NODE_ENV !== 'production') {

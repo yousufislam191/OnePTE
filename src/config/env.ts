@@ -17,6 +17,10 @@ interface IEnv {
 	DB_LOGIN_NAME: string;
 	DB_LOGIN_PASSWORD: string;
 	DB_NAME: string;
+	JWT_ACCESS_SECRET: string;
+	JWT_ACCESS_EXPIRES_IN: string;
+	JWT_REFRESH_SECRET: string;
+	JWT_REFRESH_EXPIRES_IN: string;
 }
 
 const envs: IEnv = {
@@ -32,6 +36,10 @@ const envs: IEnv = {
 	DB_LOGIN_NAME: process.env.DB_LOGIN_NAME || 'root',
 	DB_LOGIN_PASSWORD: process.env.DB_LOGIN_PASSWORD || 'root',
 	DB_NAME: process.env.DB_NAME || 'onepte',
+	JWT_ACCESS_SECRET: process.env.JWT_SECRET || 'myaccesssecret',
+	JWT_ACCESS_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '5m',
+	JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'myrefreshsecret',
+	JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
 };
 
 export { envs };
