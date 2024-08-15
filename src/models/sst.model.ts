@@ -26,7 +26,7 @@ SST.init(
 	},
 	{
 		sequelize,
-		modelName: 'sst',
+		modelName: 'ssts',
 	}
 );
 

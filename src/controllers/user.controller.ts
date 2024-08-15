@@ -10,7 +10,7 @@ class UserController extends BaseController {
 			const input: IUserRegistrationInput = req.body;
 			await userService.createUser(input);
 			this.sendResponse(req, res, {
-				status: HttpCode.OK,
+				status: HttpCode.CREATED,
 				success: true,
 				message: 'User created successfully',
 			});

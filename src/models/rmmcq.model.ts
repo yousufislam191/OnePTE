@@ -30,7 +30,7 @@ RMMCQ.init(
 	},
 	{
 		sequelize,
-		modelName: 'rmmcq',
+		modelName: 'rmmcqs',
 	}
 );
 

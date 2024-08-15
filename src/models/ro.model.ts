@@ -21,7 +21,7 @@ RO.init(
 	},
 	{
 		sequelize,
-		modelName: 'ro',
+		modelName: 'ros',
 	}
 );
 

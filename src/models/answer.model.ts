@@ -34,7 +34,7 @@ Answer.init(
 	},
 	{
 		sequelize,
-		modelName: 'answer',
+		modelName: 'answers',
 	}
 );
 
