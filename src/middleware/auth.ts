@@ -8,14 +8,15 @@ class AuthMiddleware extends BaseController {
 	public isLoggedIn = this.handleAsync(
 		async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 			if (req.cookies['accessToken']) {
-				const decodedToken = verifyJWT(
+				const decodedToken = await verifyJWT(
 					req.cookies['accessToken'],
 					envs.JWT_ACCESS_SECRET
 				);
 
-				req.userId = decodedToken as any;
-
-				return next();
+				if (decodedToken.userId) {
+					req.userId = decodedToken.userId;
+					return next();
+				}
 			}
 
 			this.sendResponse(req, res, {
@@ -25,31 +26,6 @@ class AuthMiddleware extends BaseController {
 			});
 		}
 	);
-
-	// async isLoggedIn(
-	// 	req: Request,
-	// 	res: Response,
-	// 	next: NextFunction
-	// ): Promise<void> {
-	// 	try {
-	// 		if (req.cookies['accessToken']) {
-	// 			const decodedToken = verifyJWT(
-	// 				req.cookies['accessToken'],
-	// 				envs.JWT_ACCESS_SECRET
-	// 			);
-
-	// 			req.userId = decodedToken as any;
-
-	// 			return next();
-	// 		}
-	// 		// res.redirect('/login');
-	// 		res
-	// 			.status(HttpCode.UNAUTHORIZED)
-	// 			.json({ message: 'Unauthorized. Please login' });
-	// 	} catch (error) {
-	// 		next(error);
-	// 	}
-	// }
 }
 
 export default new AuthMiddleware();

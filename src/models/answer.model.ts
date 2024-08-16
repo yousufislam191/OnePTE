@@ -19,6 +19,22 @@ Answer.init(
 			autoIncrement: true,
 			primaryKey: true,
 		},
+		user_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: 'users',
+				key: 'id',
+			},
+		},
+		question_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			references: {
+				model: 'questions',
+				key: 'id',
+			},
+		},
 		answer: {
 			type: DataTypes.JSON,
 			allowNull: false,
@@ -38,7 +54,7 @@ Answer.init(
 	}
 );
 
-Answer.belongsTo(User, { foreignKey: 'user_id' });
-Answer.belongsTo(Question, { foreignKey: 'question_id' });
+// Answer.belongsTo(User, { foreignKey: 'user_id' });
+// Answer.belongsTo(Question, { foreignKey: 'question_id' });
 
 export default Answer;
