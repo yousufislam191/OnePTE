@@ -13,7 +13,7 @@ class SST extends Model {
 SST.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			autoIncrement: true,
 			primaryKey: true,
 		},
@@ -22,7 +22,7 @@ SST.init(
 			allowNull: false,
 		},
 		time_limit: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: false,
 		},
 	},

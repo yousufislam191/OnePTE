@@ -29,7 +29,7 @@ Question.init(
 			allowNull: false,
 		},
 		sst_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
 			references: {
 				model: 'ssts',
@@ -37,7 +37,7 @@ Question.init(
 			},
 		},
 		ro_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
 			references: {
 				model: 'ros',
@@ -45,7 +45,7 @@ Question.init(
 			},
 		},
 		rmmcq_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
 			references: {
 				model: 'rmmcqs',

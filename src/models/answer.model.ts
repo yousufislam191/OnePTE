@@ -1,7 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import User from './user.model';
-import Question from './question.model';
 
 class Answer extends Model {
 	public id!: number;
@@ -9,18 +7,20 @@ class Answer extends Model {
 	public question_id!: number;
 	public answer_data!: any;
 	public score!: any;
-	public readonly submitted_at!: Date;
+
+	public readonly createdAt!: Date;
+	public readonly updatedAt!: Date;
 }
 
 Answer.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			autoIncrement: true,
 			primaryKey: true,
 		},
 		user_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: false,
 			references: {
 				model: 'users',
@@ -28,7 +28,7 @@ Answer.init(
 			},
 		},
 		question_id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: false,
 			references: {
 				model: 'questions',
@@ -40,21 +40,19 @@ Answer.init(
 			allowNull: false,
 		},
 		score: {
-			type: DataTypes.INTEGER,
-		},
-		submitted_at: {
-			type: DataTypes.DATE,
-			allowNull: false,
-			defaultValue: DataTypes.NOW,
+			type: DataTypes.INTEGER.UNSIGNED,
+			defaultValue: 0,
 		},
 	},
 	{
 		sequelize,
 		modelName: 'answers',
+		indexes: [
+			{
+				fields: ['user_id'],
+			},
+		],
 	}
 );
-
-// Answer.belongsTo(User, { foreignKey: 'user_id' });
-// Answer.belongsTo(Question, { foreignKey: 'question_id' });
 
 export default Answer;

@@ -14,7 +14,7 @@ class RMMCQ extends Model {
 RMMCQ.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.INTEGER.UNSIGNED,
 			autoIncrement: true,
 			primaryKey: true,
 		},
