@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', AuthMiddleware.isLoggedIn, questionController.getQuestions);
 
 router.get(
-	'/:id',
+	'/:id(\\d+)',
 	AuthMiddleware.isLoggedIn,
 	questionController.getQuestionById
 );
