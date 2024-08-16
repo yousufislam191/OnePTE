@@ -8,6 +8,19 @@ import SST from '../models/sst.model';
 import { paginate, paginatedResults } from '../utils/pagination';
 
 class QuestionService {
+	private shuffleArrayWithIndices(
+		array: string[]
+	): { index: number; value: string }[] {
+		const indexedArray = array.map((value, index) => ({ index, value }));
+
+		for (let i = indexedArray.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[indexedArray[i], indexedArray[j]] = [indexedArray[j], indexedArray[i]];
+		}
+
+		return indexedArray;
+	}
+
 	public async getAllQuestions(
 		type?: IType,
 		page: number = 1,
@@ -32,7 +45,6 @@ class QuestionService {
 
 		let details = null;
 		if (question.type === 'SST' && question.sst_id) {
-			console.log(question.sst_id);
 			details = await SST.findByPk(question.sst_id, {
 				attributes: ['id', 'audio_files', 'time_limit'],
 			});
@@ -40,17 +52,29 @@ class QuestionService {
 			details = await RO.findByPk(question.ro_id, {
 				attributes: ['id', 'paragraphs'],
 			});
+
+			if (details && details.paragraphs) {
+				const shuffledParagraphs = this.shuffleArrayWithIndices(
+					details.paragraphs
+				);
+				details = { ...details.toJSON(), paragraphs: shuffledParagraphs };
+			}
 		} else if (question.type === 'RMMCQ' && question.rmmcq_id) {
 			details = await RMMCQ.findByPk(question.rmmcq_id, {
 				attributes: ['id', 'passage', 'options'],
 			});
+
+			if (details && details.options) {
+				const shuffledOptions = this.shuffleArrayWithIndices(details.options);
+				details = { ...details.toJSON(), options: shuffledOptions };
+			}
 		}
 
 		return {
 			id: question.id,
 			type: question.type,
 			title: question.title,
-			details: details ? details.toJSON() : null,
+			details: details,
 		};
 	}
 }
