@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import Question from './question.model';
 
 class SST extends Model {
 	public id!: number;
@@ -29,7 +28,5 @@ SST.init(
 		modelName: 'ssts',
 	}
 );
-
-SST.belongsTo(Question, { foreignKey: 'question_id' });
 
 export default SST;

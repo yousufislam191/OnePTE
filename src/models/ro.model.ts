@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import Question from './question.model';
 
 class RO extends Model {
 	public id!: number;
@@ -24,7 +23,5 @@ RO.init(
 		modelName: 'ros',
 	}
 );
-
-RO.belongsTo(Question, { foreignKey: 'question_id' });
 
 export default RO;

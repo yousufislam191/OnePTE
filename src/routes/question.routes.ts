@@ -6,4 +6,10 @@ const router = Router();
 
 router.get('/', AuthMiddleware.isLoggedIn, questionController.getQuestions);
 
+router.get(
+	'/:id',
+	AuthMiddleware.isLoggedIn,
+	questionController.getQuestionById
+);
+
 export default router;

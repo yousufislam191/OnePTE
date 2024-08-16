@@ -1,4 +1,4 @@
-import { FindAndCountOptions, Model } from 'sequelize';
+import { FindAndCountOptions, Model, ModelCtor } from 'sequelize';
 
 interface PaginationParams {
 	limit: number;
@@ -16,7 +16,8 @@ export const paginate = (
 };
 
 export const paginatedResults = async <T extends Model>(
-	model: { new (): T } & typeof Model, // Using constructor type and Model
+	// model: { new (): T } & typeof Model, // Using constructor type and Model
+	model: ModelCtor<T>,
 	options: FindAndCountOptions
 ) => {
 	const { count, rows } = await model.findAndCountAll(options);

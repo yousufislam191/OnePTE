@@ -25,6 +25,20 @@ class QuestionController extends BaseController {
 			});
 		}
 	);
+
+	public getQuestionById = this.handleAsync(
+		async (req: Request, res: Response): Promise<void> => {
+			const question = await questionService.getQuestionById(
+				parseInt(req.params.id, 10)
+			);
+			this.sendResponse(req, res, {
+				status: HttpCode.OK,
+				success: true,
+				message: 'Question fetched successfully',
+				data: question,
+			});
+		}
+	);
 }
 
 export default new QuestionController();

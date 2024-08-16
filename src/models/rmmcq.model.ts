@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import Question from './question.model';
 
 class RMMCQ extends Model {
 	public id!: number;
@@ -33,7 +32,5 @@ RMMCQ.init(
 		modelName: 'rmmcqs',
 	}
 );
-
-RMMCQ.belongsTo(Question, { foreignKey: 'question_id' });
 
 export default RMMCQ;
