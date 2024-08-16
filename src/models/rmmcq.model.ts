@@ -4,7 +4,11 @@ import { sequelize } from '../config/db';
 class RMMCQ extends Model {
 	public id!: number;
 	public passage!: string;
-	public options!: any;
+	public options!: string[];
+	public correct_options!: number[];
+
+	public readonly createdAt!: Date;
+	public readonly updatedAt!: Date;
 }
 
 RMMCQ.init(

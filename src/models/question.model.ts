@@ -1,23 +1,7 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
 
-interface QuestionAttributes {
-	id: number;
-	type: 'SST' | 'RO' | 'RMMCQ';
-	title: string;
-	sst_id?: number | null;
-	ro_id?: number | null;
-	rmmcq_id?: number | null;
-}
-
-// Attributes for model creation (id is optional when creating a new record)
-interface QuestionCreationAttributes
-	extends Optional<QuestionAttributes, 'id'> {}
-
-class Question
-	extends Model<QuestionAttributes, QuestionCreationAttributes>
-	implements QuestionAttributes
-{
+class Question extends Model {
 	public id!: number;
 	public type!: 'SST' | 'RO' | 'RMMCQ';
 	public title!: string;
