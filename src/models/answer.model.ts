@@ -1,7 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
-import User from './user.model';
-import Question from './question.model';
 
 class Answer extends Model {
 	public id!: number;
@@ -61,8 +59,5 @@ Answer.init(
 		],
 	}
 );
-
-// Answer.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-// Answer.belongsTo(Question, { foreignKey: 'question_id', as: 'question' });
 
 export default Answer;
