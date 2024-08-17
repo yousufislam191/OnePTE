@@ -10,7 +10,7 @@ class AnswerController extends BaseController {
 			const { questionId, answerData } = req.body;
 			const result = await answerService.submitAnswer(
 				id,
-				parseInt(questionId),
+				questionId,
 				answerData
 			);
 			this.sendResponse(req, res, {

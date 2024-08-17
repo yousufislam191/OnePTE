@@ -3,42 +3,45 @@ import { HttpError } from '../middleware/errorHandler';
 import Answer from '../models/answer.model';
 import Question from '../models/question.model';
 import RMMCQ from '../models/rmmcq.model';
-import SST from '../models/sst.model';
 
 class AnswerService {
 	public async submitAnswer(id: number, questionId: number, answerData: any) {
 		const question = await Question.findByPk(questionId, {
-			attributes: ['type', 'sst_id', 'rmmcq_id'],
+			attributes: ['type', 'rmmcq_id'],
 		});
 
 		if (!question)
 			throw new HttpError(HttpCode.NOT_FOUND, 'Question not found');
 
 		let score = 0;
-		let details = null;
+		let maxScore = 0;
 
 		switch (question.type) {
 			case 'SST':
-				if (question.sst_id) {
-					details = await SST.findByPk(question.sst_id);
-				}
+				const sstResult = this.calculateSSTScore(answerData as string);
+				score = sstResult.score;
+				maxScore = sstResult.maxScore;
 				break;
 
 			case 'RO':
-				score = this.calculateROScore(answerData);
+				const roResult = this.calculateROScore(answerData as number[]);
+				score = roResult.score;
+				maxScore = roResult.maxScore;
 				break;
 
 			case 'RMMCQ':
 				if (question.rmmcq_id) {
-					details = await RMMCQ.findByPk(question.rmmcq_id, {
+					const details = await RMMCQ.findByPk(question.rmmcq_id, {
 						attributes: ['correct_options'],
 					});
 
 					if (details) {
-						score = this.calculateRMMCQScore(
-							answerData,
+						const result = this.calculateRMMCQScore(
+							answerData as number[],
 							details.correct_options
 						);
+						score = result.score;
+						maxScore = result.maxScore;
 					}
 				}
 				break;
@@ -52,12 +55,16 @@ class AnswerService {
 			question_id: questionId,
 			answer: answerData,
 			score: score,
+			max_score: maxScore,
 		});
 
 		return data;
 	}
 
-	private calculateROScore(answerData: number[]): number {
+	private calculateROScore(answerData: number[]): {
+		score: number;
+		maxScore: number;
+	} {
 		let score = 0;
 
 		// Compare adjacent pairs
@@ -68,13 +75,13 @@ class AnswerService {
 		}
 
 		const maxScore = answerData.length - 1;
-		return Math.min(score, maxScore);
+		return { score: Math.min(score, maxScore), maxScore };
 	}
 
 	private calculateRMMCQScore(
 		answerData: number[],
 		correctOptions: number[]
-	): number {
+	): { score: number; maxScore: number } {
 		let score = 0;
 		const maxScore = correctOptions.length;
 
@@ -90,7 +97,35 @@ class AnswerService {
 			}
 		});
 
-		return Math.max(0, Math.min(score, maxScore));
+		return { score: Math.max(0, Math.min(score, maxScore)), maxScore };
+	}
+
+	private calculateSSTScore(answerData: string): {
+		score: number;
+		maxScore: number;
+	} {
+		let score = 0;
+		const maxScore = 10;
+
+		// Fake scoring mechanism for SST:
+		// Assigning random values within the range of 0 to 2 for each component.
+
+		const contentScore = Math.floor(Math.random() * 3);
+		score += contentScore;
+
+		const formScore = Math.floor(Math.random() * 3);
+		score += formScore;
+
+		const grammarScore = Math.floor(Math.random() * 3);
+		score += grammarScore;
+
+		const vocabularyScore = Math.floor(Math.random() * 3);
+		score += vocabularyScore;
+
+		const spellingScore = Math.floor(Math.random() * 3);
+		score += spellingScore;
+
+		return { score: Math.min(score, maxScore), maxScore };
 	}
 }
 

@@ -7,6 +7,7 @@ class Answer extends Model {
 	public question_id!: number;
 	public answer_data!: any;
 	public score!: any;
+	public max_score!: number;
 
 	public readonly createdAt!: Date;
 	public readonly updatedAt!: Date;
@@ -42,6 +43,10 @@ Answer.init(
 		score: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			defaultValue: 0,
+		},
+		max_score: {
+			type: DataTypes.INTEGER.UNSIGNED,
+			allowNull: false,
 		},
 	},
 	{
