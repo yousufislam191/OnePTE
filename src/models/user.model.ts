@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../config/db';
+import Answer from './answer.model';
 
 class User extends Model {
 	public id!: number;
@@ -43,5 +44,7 @@ User.init(
 		tableName: 'users',
 	}
 );
+
+// User.hasMany(Answer, { foreignKey: 'user_id', as: 'answers' });
 
 export default User;
