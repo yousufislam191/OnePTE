@@ -6,7 +6,8 @@ const loginValidation = z.object({
 		password: z
 			.string()
 			.trim()
-			.min(8, { message: 'Password must be at least minimum 8 characters' }),
+			.min(8, { message: 'Password must be at least minimum 8 characters' })
+			.trim(),
 	}),
 });
 

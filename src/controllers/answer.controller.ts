@@ -8,16 +8,11 @@ class AnswerController extends BaseController {
 		async (req: Request, res: Response): Promise<void> => {
 			const id = parseInt(req.userId as string, 10);
 			const { questionId, answerData } = req.body;
-			const result = await answerService.submitAnswer(
-				id,
-				questionId,
-				answerData
-			);
+			await answerService.submitAnswer(id, questionId, answerData);
 			this.sendResponse(req, res, {
 				status: HttpCode.CREATED,
 				success: true,
 				message: 'Answer submitted successfully',
-				data: result,
 			});
 		}
 	);

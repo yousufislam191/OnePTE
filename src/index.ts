@@ -1,7 +1,7 @@
 import { app } from './app';
 import { connectDB } from './config/db';
 import { envs } from './config/env';
-import './models/user.model'; // Import models to ensure they are initialized
+import './models/user.model';
 import './models/answer.model';
 import './models/question.model';
 import './models/rmmcq.model';

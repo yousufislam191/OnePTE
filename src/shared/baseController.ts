@@ -21,7 +21,7 @@ class BaseController {
 			status: data.status,
 			success: data.success,
 			message: data.message || null,
-			data: data.data || null || undefined,
+			data: data.data || null,
 		};
 
 		return res.status(data.status).json(responseData);

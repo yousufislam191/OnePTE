@@ -16,7 +16,6 @@ export const paginate = (
 };
 
 export const paginatedResults = async <T extends Model>(
-	// model: { new (): T } & typeof Model, // Using constructor type and Model
 	model: ModelCtor<T>,
 	options: FindAndCountOptions
 ) => {

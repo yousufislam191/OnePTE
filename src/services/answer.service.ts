@@ -5,28 +5,29 @@ import Question from '../models/question.model';
 import RMMCQ from '../models/rmmcq.model';
 
 class AnswerService {
-	public async submitAnswer(id: number, questionId: number, answerData: any) {
+	public async submitAnswer(
+		userId: number,
+		questionId: number,
+		answerData: string | number[]
+	): Promise<void> {
 		const question = await Question.findByPk(questionId, {
 			attributes: ['type', 'rmmcq_id'],
 		});
 
-		if (!question)
+		if (!question) {
 			throw new HttpError(HttpCode.NOT_FOUND, 'Question not found');
+		}
 
 		let score = 0;
 		let maxScore = 0;
 
 		switch (question.type) {
 			case 'SST':
-				const sstResult = this.calculateSSTScore(answerData as string);
-				score = sstResult.score;
-				maxScore = sstResult.maxScore;
+				({ score, maxScore } = this.calculateSSTScore(answerData as string));
 				break;
 
 			case 'RO':
-				const roResult = this.calculateROScore(answerData as number[]);
-				score = roResult.score;
-				maxScore = roResult.maxScore;
+				({ score, maxScore } = this.calculateROScore(answerData as number[]));
 				break;
 
 			case 'RMMCQ':
@@ -36,12 +37,10 @@ class AnswerService {
 					});
 
 					if (details) {
-						const result = this.calculateRMMCQScore(
+						({ score, maxScore } = this.calculateRMMCQScore(
 							answerData as number[],
 							details.correct_options
-						);
-						score = result.score;
-						maxScore = result.maxScore;
+						));
 					}
 				}
 				break;
@@ -50,15 +49,13 @@ class AnswerService {
 				throw new HttpError(HttpCode.BAD_REQUEST, 'Invalid question type');
 		}
 
-		const data = await Answer.create({
-			user_id: id,
+		await Answer.create({
+			user_id: userId,
 			question_id: questionId,
 			answer: answerData,
-			score: score,
+			score,
 			max_score: maxScore,
 		});
-
-		return data;
 	}
 
 	private calculateROScore(answerData: number[]): {
@@ -111,19 +108,13 @@ class AnswerService {
 		// Assigning random values within the range of 0 to 2 for each component.
 
 		const contentScore = Math.floor(Math.random() * 3);
-		score += contentScore;
-
 		const formScore = Math.floor(Math.random() * 3);
-		score += formScore;
-
 		const grammarScore = Math.floor(Math.random() * 3);
-		score += grammarScore;
-
 		const vocabularyScore = Math.floor(Math.random() * 3);
-		score += vocabularyScore;
-
 		const spellingScore = Math.floor(Math.random() * 3);
-		score += spellingScore;
+
+		score =
+			contentScore + formScore + grammarScore + vocabularyScore + spellingScore;
 
 		return { score: Math.min(score, maxScore), maxScore };
 	}
