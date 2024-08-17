@@ -17,6 +17,7 @@ router.get(
 router.post(
 	'/',
 	AuthMiddleware.isLoggedIn,
+	AuthMiddleware.isAdmin,
 	validateResource(createQuestionSchema),
 	questionController.createQuestion
 );
