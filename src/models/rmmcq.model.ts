@@ -6,9 +6,6 @@ class RMMCQ extends Model {
 	public passage!: string;
 	public options!: string[];
 	public correct_options!: number[];
-
-	public readonly createdAt!: Date;
-	public readonly updatedAt!: Date;
 }
 
 RMMCQ.init(

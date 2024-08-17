@@ -8,9 +8,6 @@ class Answer extends Model {
 	public answer_data!: any;
 	public score!: any;
 	public max_score!: number;
-
-	public readonly createdAt!: Date;
-	public readonly updatedAt!: Date;
 }
 
 Answer.init(
@@ -23,18 +20,10 @@ Answer.init(
 		user_id: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: false,
-			references: {
-				model: 'users',
-				key: 'id',
-			},
 		},
 		question_id: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: false,
-			references: {
-				model: 'questions',
-				key: 'id',
-			},
 		},
 		answer: {
 			type: DataTypes.JSON,

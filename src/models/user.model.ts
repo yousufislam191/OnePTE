@@ -7,9 +7,6 @@ class User extends Model {
 	public email!: string;
 	public password!: string;
 	public isAdmin!: boolean;
-
-	public readonly createdAt!: Date;
-	public readonly updatedAt!: Date;
 }
 
 User.init(

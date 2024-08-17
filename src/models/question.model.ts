@@ -8,9 +8,6 @@ class Question extends Model {
 	public sst_id?: number | null;
 	public ro_id?: number | null;
 	public rmmcq_id?: number | null;
-
-	public readonly createdAt!: Date;
-	public readonly updatedAt!: Date;
 }
 
 Question.init(
@@ -31,26 +28,14 @@ Question.init(
 		sst_id: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
-			references: {
-				model: 'ssts',
-				key: 'id',
-			},
 		},
 		ro_id: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
-			references: {
-				model: 'ros',
-				key: 'id',
-			},
 		},
 		rmmcq_id: {
 			type: DataTypes.INTEGER.UNSIGNED,
 			allowNull: true,
-			references: {
-				model: 'rmmcqs',
-				key: 'id',
-			},
 		},
 	},
 	{

@@ -1,17 +1,14 @@
 import { app } from './app';
 import { connectDB } from './config/db';
 import { envs } from './config/env';
-import './models/user.model';
-import './models/answer.model';
-import './models/question.model';
-import './models/rmmcq.model';
-import './models/sst.model';
-import './models/ro.model';
-import './models/associations';
+import defineAssociations from './models/associations';
 
 const startServer = async () => {
 	try {
 		await connectDB();
+
+		// Set up sequelize associations for models
+		defineAssociations();
 
 		app.listen(envs.SERVER_PORT, () => {
 			console.log(

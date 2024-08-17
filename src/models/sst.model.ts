@@ -5,9 +5,6 @@ class SST extends Model {
 	public id!: number;
 	public time_limit!: number;
 	public audio_files!: any;
-
-	public readonly createdAt!: Date;
-	public readonly updatedAt!: Date;
 }
 
 SST.init(
