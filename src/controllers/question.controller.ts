@@ -39,6 +39,18 @@ class QuestionController extends BaseController {
 			});
 		}
 	);
+
+	public createQuestion = this.handleAsync(
+		async (req: Request, res: Response): Promise<void> => {
+			const question = await questionService.createQuestion(req.body);
+			this.sendResponse(req, res, {
+				status: HttpCode.CREATED,
+				success: true,
+				message: 'Question created successfully',
+				data: question,
+			});
+		}
+	);
 }
 
 export default new QuestionController();

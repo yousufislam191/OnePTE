@@ -77,6 +77,40 @@ class QuestionService {
 			details: details,
 		};
 	}
+
+	public async createQuestion(data: any) {
+		const {
+			type,
+			title,
+			time_limit,
+			audio_files,
+			paragraphs,
+			passage,
+			options,
+			correct_options,
+		} = data;
+
+		let questionData: any = { type: type, title: title };
+		let details;
+
+		if (type === 'SST') {
+			details = await SST.create({
+				time_limit: time_limit,
+				audio_files: audio_files,
+			});
+			questionData = { ...questionData, sst_id: details.id };
+		} else if (type === 'RO') {
+			details = await RO.create({ paragraphs });
+			questionData = { ...questionData, ro_id: details.id };
+		} else if (type === 'RMMCQ') {
+			details = await RMMCQ.create({ passage, options, correct_options });
+			questionData = { ...questionData, rmmcq_id: details.id };
+		}
+
+		const question = await Question.create(questionData);
+
+		return { question, details };
+	}
 }
 
 export default new QuestionService();
