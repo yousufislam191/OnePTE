@@ -29,19 +29,17 @@ class UserService {
 		type?: IType,
 		page: number = 1,
 		pageSize: number = 10
-	) {
+	): Promise<any> {
 		const paginationParams = paginate(page, pageSize);
 
-		// Include Question and its type-specific associations
+		const user = await User.findByPk(userId, {
+			attributes: ['name'],
+		});
+
 		const result = await paginatedResults(Answer, {
 			where: { user_id: userId },
 			attributes: ['id', 'answer', 'score', 'max_score'],
 			include: [
-				{
-					model: User,
-					as: 'user',
-					attributes: ['name'],
-				},
 				{
 					model: Question,
 					as: 'question',
@@ -70,10 +68,9 @@ class UserService {
 			offset: paginationParams.offset,
 		});
 
+		const { totalItems, totalPages, currentPage } = result;
+
 		const formattedData = result.data.map((item: any) => ({
-			user: {
-				name: item.user.name,
-			},
 			answer: {
 				id: item.id,
 				answer: item.answer,
@@ -91,7 +88,10 @@ class UserService {
 		}));
 
 		return {
-			...result,
+			totalItems,
+			totalPages,
+			currentPage,
+			user,
 			history: formattedData,
 		};
 	}
