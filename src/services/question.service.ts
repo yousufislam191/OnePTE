@@ -87,27 +87,37 @@ class QuestionService {
 			passage,
 			options,
 			correct_options,
+			speakers,
 		} = data;
 
 		let audioFiles: { fileUrl: string; speaker: string }[] = [];
 
+		// Creating object containing audio files and speakers
 		if (files && files['audio_files']) {
-			audioFiles = files['audio_files'].map((file: any) => ({
+			audioFiles = files['audio_files'].map((file: any, index: number) => ({
 				fileUrl: file.path,
-				speaker: 'Unknown',
+				speaker: speakers && speakers[index] ? speakers[index] : 'Unknown',
 			}));
 		}
 
 		// Validate audioFiles separately
-		if (type === 'SST' && audioFiles.length === 0)
-			throw new HttpError(
-				HttpCode.BAD_REQUEST,
-				'Audio files are required for SST type questions'
-			);
+		if (type === 'SST' && (audioFiles.length === 0 || !speakers)) {
+			if (audioFiles.length === 0)
+				throw new HttpError(
+					HttpCode.BAD_REQUEST,
+					'Audio files are required for SST type questions'
+				);
+			if (!speakers)
+				throw new HttpError(
+					HttpCode.BAD_REQUEST,
+					'Speakers are required for SST type questions'
+				);
+		}
 
 		let questionData: any = { type: type, title: title };
 		let details;
 
+		// Store question in database
 		if (type === 'SST') {
 			details = await SST.create({
 				time_limit: parseInt(time_limit as string, 10),

@@ -9,7 +9,14 @@ const createQuestionSchema = z.object({
 			title: z.string({ message: 'Title must be a string' }).min(1, {
 				message: 'Title is required',
 			}),
-			time_limit: z.string({ message: 'Time limit is required' }).optional(), // SST
+			time_limit: z
+				.number({ message: 'Time limit must be a positive number' })
+				.int()
+				.positive()
+				.optional(), // SST
+			speakers: z
+				.array(z.string({ message: 'Each speaker must be a string' }))
+				.optional(), // SST
 			paragraphs: z
 				.array(z.string({ message: 'Each paragraph must be a string' }))
 				.optional(), // RO
@@ -28,6 +35,13 @@ const createQuestionSchema = z.object({
 						code: z.ZodIssueCode.custom,
 						message: 'Time limit is required for SST',
 						path: ['time_limit'],
+					});
+				}
+				if (!data.speakers) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Speakers is required for SST',
+						path: ['speakers'],
 					});
 				}
 			}
