@@ -78,25 +78,40 @@ class QuestionService {
 		};
 	}
 
-	public async createQuestion(data: any) {
+	public async createQuestion(data: any, files: any) {
 		const {
 			type,
 			title,
 			time_limit,
-			audio_files,
 			paragraphs,
 			passage,
 			options,
 			correct_options,
 		} = data;
 
+		let audioFiles: { fileUrl: string; speaker: string }[] = [];
+
+		if (files && files['audio_files']) {
+			audioFiles = files['audio_files'].map((file: any) => ({
+				fileUrl: file.path,
+				speaker: 'Unknown',
+			}));
+		}
+
+		// Validate audioFiles separately
+		if (type === 'SST' && audioFiles.length === 0)
+			throw new HttpError(
+				HttpCode.BAD_REQUEST,
+				'Audio files are required for SST type questions'
+			);
+
 		let questionData: any = { type: type, title: title };
 		let details;
 
 		if (type === 'SST') {
 			details = await SST.create({
-				time_limit: time_limit,
-				audio_files: audio_files,
+				time_limit: parseInt(time_limit as string, 10),
+				audio_files: audioFiles,
 			});
 			questionData = { ...questionData, sst_id: details.id };
 		} else if (type === 'RO') {

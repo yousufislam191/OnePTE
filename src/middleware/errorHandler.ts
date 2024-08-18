@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
+import multer from 'multer';
 import {
 	ValidationError,
 	UniqueConstraintError,
@@ -39,7 +40,32 @@ const errorHandler = (
 	let message: string;
 	let errors: any[];
 
-	if (err instanceof ZodError) {
+	if (err.code === 'LIMIT_FILE_SIZE') {
+		// Handle file size limit error from multer
+		status = HttpCode.BAD_REQUEST;
+		message = 'File size limit exceeded. Maximum allowed size is 10 MB.';
+		errors = [
+			{
+				field: 'audio_files',
+				message: message,
+			},
+		];
+	} else if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+		// Handle file size limit error from multer
+		status = HttpCode.BAD_REQUEST;
+		message = 'Too many files! Maximum file allowed is 5.';
+		errors = [
+			{
+				field: 'audio_files',
+				message: message,
+			},
+		];
+	} else if (err instanceof multer.MulterError) {
+		// Handle multer errors
+		status = HttpCode.BAD_REQUEST;
+		message = 'File upload error';
+		errors = [{ message: err.message }];
+	} else if (err instanceof ZodError) {
 		// Handle Zod validation errors
 		status = HttpCode.BAD_REQUEST;
 		message = 'Input Validation error';

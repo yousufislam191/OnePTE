@@ -42,7 +42,10 @@ class QuestionController extends BaseController {
 
 	public createQuestion = this.handleAsync(
 		async (req: Request, res: Response): Promise<void> => {
-			const question = await questionService.createQuestion(req.body);
+			const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
+			const question = await questionService.createQuestion(req.body, files);
+
 			this.sendResponse(req, res, {
 				status: HttpCode.CREATED,
 				success: true,

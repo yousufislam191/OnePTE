@@ -6,20 +6,10 @@ const createQuestionSchema = z.object({
 			type: z.enum(['SST', 'RO', 'RMMCQ'], {
 				required_error: 'Question type is required',
 			}),
-			title: z.string().min(1, { message: 'Title is required' }),
-			time_limit: z
-				.number({ message: 'Time limit must be a positive number' })
-				.int()
-				.positive()
-				.optional(), // SST
-			audio_files: z
-				.array(
-					z.object({
-						fileUrl: z.string().url({ message: 'Invalid audio file URL' }),
-						speaker: z.string().min(1, { message: 'Speaker name is required' }),
-					})
-				)
-				.optional(), // SST
+			title: z.string({ message: 'Title must be a string' }).min(1, {
+				message: 'Title is required',
+			}),
+			time_limit: z.string({ message: 'Time limit is required' }).optional(), // SST
 			paragraphs: z
 				.array(z.string({ message: 'Each paragraph must be a string' }))
 				.optional(), // RO
@@ -38,13 +28,6 @@ const createQuestionSchema = z.object({
 						code: z.ZodIssueCode.custom,
 						message: 'Time limit is required for SST',
 						path: ['time_limit'],
-					});
-				}
-				if (!data.audio_files || !Array.isArray(data.audio_files)) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
-						message: 'Audio files are required and must be an array for SST',
-						path: ['audio_files'],
 					});
 				}
 			}
