@@ -35,7 +35,7 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
 ### User Endpoints
 
-#### [⬆️](#table-of-contents) Register a new user
+#### Register a new user
 
 - **POST `/api/v1/users/register`**
 
@@ -64,7 +64,9 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
-#### [⬆️](#table-of-contents) Get user practice history
+  [⬆️ Back to top](#table-of-contents)
+
+#### Get user practice history
 
 - **GET `/api/v1/users/history?type=SST&page=1&pageSize=5`**
 
@@ -170,9 +172,11 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
+  [⬆️ Back to top](#table-of-contents)
+
 ### Authentication Endpoints
 
-#### [⬆️](#table-of-contents) Login a user
+#### Login a user
 
 - **POST `/api/v1/auth/login`**
 
@@ -202,7 +206,9 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
-#### [⬆️](#table-of-contents) Logout a user
+  [⬆️ Back to top](#table-of-contents)
+
+#### Logout a user
 
 - **POST `/api/v1/auth/logout`**
   <details><summary>Request Headers</summary>
@@ -226,9 +232,11 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
+  [⬆️ Back to top](#table-of-contents)
+
 ### Question Endpoints
 
-#### [⬆️](#table-of-contents) Create a new question
+#### Create a new question
 
 - **POST `/api/v1/questions`**
 
@@ -364,7 +372,9 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
-#### [⬆️](#table-of-contents) Get all questions with pagination and filtering
+  [⬆️ Back to top](#table-of-contents)
+
+#### Get all questions with pagination and filtering
 
 - **GET `/api/v1/questions?page=1&pageSize=5`**
 
@@ -506,7 +516,9 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
-#### [⬆️](#table-of-contents) Get a specific question
+  [⬆️ Back to top](#table-of-contents)
+
+#### Get a specific question
 
 - **GET `/api/v1/questions/:id`**
 
@@ -558,9 +570,11 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
+  [⬆️ Back to top](#table-of-contents)
+
 ### Answer Endpoints
 
-#### [⬆️](#table-of-contents) Create a new answer for a specific question
+#### Create a new answer for a specific question
 
 - **POST `/api/v1/answers`**
 
@@ -610,7 +624,7 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   </details>
 
-### [⬆️ Back to top](#table-of-contents)
+  [⬆️ Back to top](#table-of-contents)
 
 ## Run this project
 
