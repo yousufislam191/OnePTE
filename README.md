@@ -620,4 +620,46 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
 ### Running with Docker
 
+To run this project using Docker, follow these steps:
+
+1. **Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and [Git](https://git-scm.com/downloads)**
+2. **Open a terminal and Clone this github repository**
+
+   ```bash
+   git clone https://github.com/yousufislam191/OnePTE.git
+   ```
+
+3. **Enter the cloned repository**
+
+   ```bash
+   cd OnePTE
+   ```
+
+4. **Build and Start Containers:**
+
+   Use the provided `docker-up.sh` script to build the Docker images and start the containers. Run the following command:
+
+   ```bash
+   ./docker-up.sh
+   ```
+
+   This will execute the `docker-compose.yml` file, build the necessary Docker images, and start the containers in detached mode.
+
+5. **Stop and Remove Containers:**
+
+   If you need to stop and remove the running containers, use the `docker-down.sh` script. Run the following command:
+
+   ```bash
+   ./docker-down.sh
+   ```
+
+   This will execute the `docker-compose.yml` file, stop and remove the running containers.
+
+6. **Access the Application:**
+
+   Once the containers are up and running,
+
+   - you can access the application at http://localhost:3001 in your browser or Postman.
+   - you can acces the database at http://localhost:8081 in your browser through `phpMyAdmin` with the `username:` `root` and `password:` `root`.
+
 ### [⬆️ Back to top](#table-of-contents)
