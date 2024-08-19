@@ -13,6 +13,12 @@ services:
       - mysql-data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=onepte
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 20s  # Wait 20 seconds between checks
+      timeout: 10s   # Consider the check failed if it takes longer than 10 seconds
+      retries: 10    # After 10 failed attempts, consider the container unhealthy
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -27,6 +33,37 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     depends_on:
       - mysql
+    
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: node-app
+    # restart: always
+    ports:
+      - "3001:3001"
+    networks:
+      - bridge
+    # volumes:
+    #   - .:/usr/src/app
+    environment:
+      - SERVER_PORT=3001
+      - ALLOWED_ORIGINS=http://localhost:3000
+      - NODE_ENV=production
+      - API_PREFIX=/api/v1
+      - APPLICATION_NAME=OnePTE
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_LOGIN_NAME=root
+      - DB_LOGIN_PASSWORD=root
+      - DB_NAME=onepte
+      - JWT_ACCESS_SECRET=myaccesssecret
+      - JWT_ACCESS_EXPIRES_IN=5m
+      - JWT_REFRESH_SECRET=myrefreshsecret
+      - JWT_REFRESH_EXPIRES_IN=7d
+    depends_on:
+      mysql:
+        condition: service_healthy
 
 networks:
   bridge:
