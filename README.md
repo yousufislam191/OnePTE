@@ -30,6 +30,8 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
 ## Database Design
 
+![Diagram](./databaseDesign.png 'Diagram of the database architecture')
+
 ### [⬆️ Back to top](#table-of-contents)
 
 ## API Endpoints
