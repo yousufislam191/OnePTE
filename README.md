@@ -21,6 +21,7 @@
 - [Run this project](#run-this-project)
   - [Running Locally](#running-locally)
   - [Running with Docker](#running-with-docker)
+- [Test Api's](#test-api's)
 
 ## Introduction
 
@@ -77,7 +78,7 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   | Parameter  | Type   | Description                                                                         |
   | ---------- | ------ | ----------------------------------------------------------------------------------- |
-  | `type`     | string | (optional) Filters history by question type. Possible values: `SST`, `RO`, `RMMCQ`. |
+  | `type`     | enum   | (optional) Filters history by question type. Possible values: `SST`, `RO`, `RMMCQ`. |
   | `page`     | string | (optional) Specifies the page number for pagination. Default is `1`.                |
   | `pageSize` | string | (optional) Specifies the number of items per page. Default is `10`.                 |
 
@@ -294,8 +295,8 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
     "time_limit": 20,
     "speakers": ["Speaker 1", "Speaker 2"],
     "paragraphs": ["paragraphs 1", "paragraphs 2", "paragraphs 3", "paragraphs 4"],
-    "passage": "Sample passage text",
-    "options": ["option 1", "option 2", "option 3", "option 4", "option 5"],
+    "passage": "Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME 'users' AND TABLE_SCHEMA = 'onepte'",
+    "options": ["options 1", "options 2", "options 3", "options 4", "options 5"],
     "correct_options": [1, 2, 4]
   }
 
@@ -307,33 +308,36 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   ```JSON
     {
-      "status": 201,
-      "success": true,
-      "message": "Question created successfully",
-      "data": {
+    "status": 201,
+    "success": true,
+    "message": "Question created successfully",
+    "data": {
         "question": {
-          "id": 1,
-          "title": "Sample SST Question",
-          "type": "SST",
-          "sst": {
+            "id": 4,
+            "type": "SST",
+            "title": "Title must be a string",
+            "sst_id": 1,
+            "updatedAt": "2024-08-20T22:27:17.826Z",
+            "createdAt": "2024-08-20T22:27:17.826Z"
+        },
+        "details": {
             "id": 1,
             "time_limit": 20,
             "audio_files": [
-              {
-                "fileUrl": "uploads/audio1.mp3",
-                "speaker": "Speaker 1"
-              },
-              {
-                "fileUrl": "uploads/audio2.mp3",
-                "speaker": "Speaker 2"
-              }
-            ]
-          },
-          "ro": null,
-          "rmmcq": null
+                {
+                    "fileUrl": "uploads/audio/1724192835930-AvoidRafa_(cover).mp3",
+                    "speaker": "Speaker 1"
+                },
+                {
+                    "fileUrl": "uploads/audio/1724192836022-Music_(_no_copyright_Music_)_01.mp3",
+                    "speaker": "Speaker 2"
+                }
+            ],
+            "updatedAt": "2024-08-20T22:27:16.084Z",
+            "createdAt": "2024-08-20T22:27:16.084Z"
         }
-      }
     }
+  }
 
   ```
 
@@ -343,26 +347,31 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   ```JSON
     {
-      "status": 201,
-      "success": true,
-      "message": "Question created successfully",
-      "data": {
+    "status": 201,
+    "success": true,
+    "message": "Question created successfully",
+    "data": {
         "question": {
-          "id": 2,
-          "title": "Sample RO Question",
-          "type": "RO",
-          "sst": null,
-          "ro": {
+            "id": 3,
+            "type": "RO",
+            "title": "Title must be a string",
+            "ro_id": 1,
+            "updatedAt": "2024-08-20T22:26:43.350Z",
+            "createdAt": "2024-08-20T22:26:43.350Z"
+        },
+        "details": {
             "id": 1,
             "paragraphs": [
-              "paragraph 1",
-              "paragraph 2"
-            ]
-          },
-          "rmmcq": null
+                "paragraphs 1",
+                "paragraphs 2",
+                "paragraphs 3",
+                "paragraphs 4"
+            ],
+            "updatedAt": "2024-08-20T22:26:43.231Z",
+            "createdAt": "2024-08-20T22:26:43.231Z"
         }
-      }
     }
+  }
 
   ```
 
@@ -372,30 +381,38 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   ```JSON
     {
-      "status": 201,
-      "success": true,
-      "message": "Question created successfully",
-      "data": {
+    "status": 201,
+    "success": true,
+    "message": "Question created successfully",
+    "data": {
         "question": {
-          "id": 3,
-          "title": "Sample RMMCQ Question",
-          "type": "RMMCQ",
-          "sst": null,
-          "ro": null,
-          "rmmcq": {
-            "id": 1,
-            "passage": "Sample passage text",
+            "id": 2,
+            "type": "RMMCQ",
+            "title": "Title must be a string",
+            "rmmcq_id": 2,
+            "updatedAt": "2024-08-20T22:25:24.736Z",
+            "createdAt": "2024-08-20T22:25:24.736Z"
+        },
+        "details": {
+            "id": 2,
+            "passage": "Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME 'users' AND TABLE_SCHEMA = 'onepte'",
             "options": [
-              "option 1",
-              "option 2",
-              "option 3",
-              "option 4"
+                "options 1",
+                "options 2",
+                "options 3",
+                "options 4",
+                "options 5"
             ],
-            "correct_options": [1, 2, 4]
-          }
+            "correct_options": [
+                1,
+                2,
+                4
+            ],
+            "updatedAt": "2024-08-20T22:25:24.472Z",
+            "createdAt": "2024-08-20T22:25:24.472Z"
         }
-      }
     }
+  }
 
   ```
 
@@ -411,7 +428,7 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   | Parameter  | Type   | Description                                                                           |
   | ---------- | ------ | ------------------------------------------------------------------------------------- |
-  | `type`     | string | (optional) Filters questions by question type. Possible values: `SST`, `RO`, `RMMCQ`. |
+  | `type`     | enum   | (optional) Filters questions by question type. Possible values: `SST`, `RO`, `RMMCQ`. |
   | `page`     | string | (optional) Specifies the page number for pagination. Default is `1`.                  |
   | `pageSize` | string | (optional) Specifies the number of items per page. Default is `10`.                   |
 
@@ -571,28 +588,35 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 
   ```JSON
     {
-      "status": 200,
-      "success": true,
-      "message": "Question fetched successfully",
-      "data": {
-          "id": 12,
-          "type": "SST",
-          "title": "Fix: Use Dynamic Assignment for questionData",
-          "details": {
-              "id": 5,
-              "audio_files": [
-                  {
-                      "fileUrl": "uploads\\audio\\1724007069536-_Koshto__-_AvoidRafa_(cover).mp3",
-                      "speaker": "Unknown"
-                  },
-                  {
-                      "fileUrl": "uploads\\audio\\1724007069568-Very_Emotional_Sad_Music_(_no_copyright_Music_)_01.mp3",
-                      "speaker": "Unknown"
-                  }
-              ],
-              "time_limit": 12
-          }
-      }
+    "status": 200,
+    "success": true,
+    "message": "Question fetched successfully",
+    "data": {
+        "id": 3,
+        "type": "RO",
+        "title": "Title must be a string",
+        "details": {
+            "id": 1,
+            "paragraphs": [
+                {
+                    "index": 3,
+                    "value": "paragraphs 4"
+                },
+                {
+                    "index": 2,
+                    "value": "paragraphs 3"
+                },
+                {
+                    "index": 0,
+                    "value": "paragraphs 1"
+                },
+                {
+                    "index": 1,
+                    "value": "paragraphs 2"
+                }
+            ]
+        }
+    }
   }
 
   ```
@@ -620,10 +644,11 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
   ```JSON
   {
       "questionId": 2,
-      "answerData": [0,1, 2,3]
+      "answerData": [0, 1, 2, 3]
   }
-
   ```
+
+  `Note:` The `answerData` value is the array of numbers `[0, 1, 2, 3]` which is the index number of the `RO`'s paragraphs & `RMMCQ`'s options type question.
 
   </details>
 
@@ -658,6 +683,70 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
 ## Run this project
 
 ### Running Locally
+
+To run the OnePTE API locally, follow these steps:
+
+**1. Clone the Repository:**
+
+First, clone the repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/yousufislam191/OnePTE.git
+cd OnePTE
+```
+
+**2. Install Dependencies:**
+
+Make sure you have Node.js and npm installed on your system. Then, install the required dependencies:
+
+```bash
+npm install
+```
+
+**3. Set Up Environment Variables:**
+
+Rename the file from `.env.example` to `.env`. Add the necessary environment variables as shown below:
+
+```env
+SERVER_PORT = 3001
+ALLOWED_ORIGINS = http://localhost:3000
+NODE_ENV = development
+API_PREFIX = /api/v1
+APPLICATION_NAME = OnePTE
+
+DB_HOST = localhost
+DB_PORT = 3306
+DB_LOGIN_NAME = root
+DB_LOGIN_PASSWORD = root
+DB_NAME = onepte
+
+JWT_ACCESS_SECRET = myaccesssecret
+JWT_ACCESS_EXPIRES_IN = 5m
+JWT_REFRESH_SECRET = myrefreshsecret
+JWT_REFRESH_EXPIRES_IN = 7d
+```
+
+Replace `DB_LOGIN_NAME`, `DB_LOGIN_PASSWORD`, and onepte with your MySQL credentials and database name.
+
+**4. Set Up the Database:**
+
+Ensure MySQL is running on your machine. Then, run the following command to create and migrate the database:
+
+```bash
+npm run db:migrate
+```
+
+This will automatically create the database and apply any migrations.
+
+**5. Start the Application:**
+
+Start the server using the following command:
+
+```bash
+npm run dev
+```
+
+The server should now be running at http://localhost:3001.
 
 ### [⬆️ Back to top](#table-of-contents)
 
@@ -704,5 +793,11 @@ To run this project using Docker, follow these steps:
 
    - you can access the application at http://localhost:3001 in your browser or Postman.
    - you can acces the database at http://localhost:8081 in your browser through `phpMyAdmin` with the `username:` `root` and `password:` `root`.
+
+### [⬆️ Back to top](#table-of-contents)
+
+## Test Api's
+
+To test api endpoint, download the [Postman Collection](./OnePTE.postman_collection.json) file then import it into you postman.
 
 ### [⬆️ Back to top](#table-of-contents)

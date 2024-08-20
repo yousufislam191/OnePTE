@@ -1,0 +1,426 @@
+{
+	"info": {
+		"_postman_id": "89a54193-dade-4458-a3a9-452895668921",
+		"name": "OnePTE",
+		"description": "This is a sample OnePTE Application specification.\n\nContact Support:  \nName: Yousuf Islam  \nEmail: [yousufislam337@gmail.com](https://mailto:yousufislam337@gmail.com)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27853638"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Yousuf One\",\n  \"email\": \"yousufislam34@gmail.com\",\n  \"password\": \"12345@qQ\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/users/register"
+					},
+					"response": []
+				},
+				{
+					"name": "User History",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}{{API_PREFIX}}/users/history?type=&page&pageSize",
+							"host": [
+								"{{localhost}}{{API_PREFIX}}"
+							],
+							"path": [
+								"users",
+								"history"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": null
+								},
+								{
+									"key": "pageSize",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### **Operations related to users**"
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"yousufislam34@gmail.com\",\n  \"password\": \"12345@qQ\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/auth/refresh-token"
+					},
+					"response": []
+				}
+			],
+			"description": "### **Operations related to user authentication**"
+		},
+		{
+			"name": "Question",
+			"item": [
+				{
+					"name": "All Questions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}{{API_PREFIX}}/questions?type=&page=&pageSize=4",
+							"host": [
+								"{{localhost}}{{API_PREFIX}}"
+							],
+							"path": [
+								"questions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": ""
+								},
+								{
+									"key": "page",
+									"value": ""
+								},
+								{
+									"key": "pageSize",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio_files",
+									"type": "file",
+									"src": [
+										"-GVJ_0UBp/_Koshto_ - AvoidRafa (cover).mp3",
+										"YhvQa96Pk/Very Emotional Sad Music ( no copyright Music )_01.mp3"
+									]
+								},
+								{
+									"key": "jsonData",
+									"value": "{\n    \"type\": \"SST\",\n    \"title\": \"Title must be a string\",\n    \"time_limit\": 20,\n    \"speakers\": [\"Speaker 1\", \"Speaker 2\"],\n    \"paragraphs\": [\"paragraphs 1\", \"paragraphs 2\", \"paragraphs 3\", \"paragraphs 4\"],\n    \"passage\": \"Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME 'users' AND TABLE_SCHEMA = 'onepte'\",\n    \"options\": [\"options 1\", \"options 2\", \"options 3\", \"options 4\", \"options 5\"],\n    \"correct_options\": [1, 2, 4]\n}",
+									"contentType": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/questions"
+					},
+					"response": []
+				},
+				{
+					"name": "Question By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}{{API_PREFIX}}/questions/:id",
+							"host": [
+								"{{localhost}}{{API_PREFIX}}"
+							],
+							"path": [
+								"questions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Answer",
+			"item": [
+				{
+					"name": "Submit Answer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionId\": 1,\r\n    \"answerData\": [0,1, 2,3]\r\n    // \"answerData\": [\"0\",\"1\", \"2\",\"3\"]\r\n    // \"answerData\": \"Return Object from Scoring Functions: Each scoring function now returns an object with score and maxScore.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhost}}{{API_PREFIX}}/answer"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Root route",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "/api/v1",
+			"type": "string"
+		}
+	]
+}
