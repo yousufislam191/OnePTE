@@ -705,7 +705,7 @@ npm install
 
 **3. Set Up Environment Variables:**
 
-Rename the file from `.env.example` to `.env`. Add the necessary environment variables as shown below:
+Add the necessary environment variables in `.env.development` file as shown below:
 
 ```env
 SERVER_PORT = 3001
