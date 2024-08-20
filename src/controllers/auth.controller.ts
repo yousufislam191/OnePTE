@@ -28,6 +28,17 @@ class AuthController extends BaseController {
 			});
 		}
 	);
+
+	public generateRefreshToken = this.handleAsync(
+		async (req: Request, res: Response): Promise<void> => {
+			await authService.generateRefreshToken(res, req.cookies.refreshToken);
+			this.sendResponse(req, res, {
+				status: HttpCode.OK,
+				success: true,
+				message: 'New access token generated successfully',
+			});
+		}
+	);
 }
 
 export default new AuthController();

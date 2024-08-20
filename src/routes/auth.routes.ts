@@ -8,5 +8,6 @@ const router = Router();
 
 router.post('/login', validateResource(loginValidation), authController.login);
 router.post('/logout', AuthMiddleware.isLoggedIn, authController.logout);
+router.get('/refresh-token', authController.generateRefreshToken);
 
 export default router;

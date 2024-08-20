@@ -11,6 +11,7 @@
   - [Authentication Endpoints](#authentication-endpoints)
     - [Login a user](#login-a-user)
     - [Logout a user](#logout-a-user)
+    - [Generate Refresh Token](#generate-refresh-token)
   - [Question Endpoints](#question-endpoints)
     - [Create a new question](#create-a-new-question)
     - [Get all questions with pagination and filtering](#get-all-questions-with-pagination-and-filtering)
@@ -226,6 +227,32 @@ OnePTE is a REST API built with Node.js and Express.js framework. It uses Sequel
     "status": 200,
     "success": true,
     "message": "Successfully logged out",
+    "data": null
+  }
+  ```
+
+  </details>
+
+  [⬆️ Back to top](#table-of-contents)
+
+#### Generate Refresh Token
+
+- **POST `/api/v1/auth/refresh-token`**
+  <details><summary>Request Headers</summary>
+
+  | Header Name | Value Type | Description                                                   |
+  | ----------- | ---------- | ------------------------------------------------------------- |
+  | `Cookie`    | string     | Contains `accessToken` and `refreshToken` for authentication. |
+
+  </details>
+
+  <details><summary>Response Example</summary>
+
+  ```JSON
+  {
+    "status": 200,
+    "success": true,
+    "message": "New access token generated successfully",
     "data": null
   }
   ```

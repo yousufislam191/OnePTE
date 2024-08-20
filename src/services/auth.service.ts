@@ -6,7 +6,7 @@ import { HttpError } from '../middleware/errorHandler';
 import User from '../models/user.model';
 import cookie from '../utils/cookie';
 import { comparePassword } from '../utils/encryptedPassword';
-import { createJWT } from '../utils/createJWT';
+import { createJWT, verifyJWT } from '../utils/createJWT';
 import { envs } from '../config/env';
 
 class AuthService {
@@ -43,6 +43,20 @@ class AuthService {
 
 	public async logout(res: Response): Promise<void> {
 		cookie.removeToken(res);
+	}
+
+	public async generateRefreshToken(res: Response, token: any): Promise<void> {
+		if (!token)
+			throw new HttpError(HttpCode.NOT_FOUND, 'Refresh toekn not found');
+
+		const decoded: any = verifyJWT(token, envs.JWT_REFRESH_SECRET);
+		const accessToken = createJWT(
+			{ userId: decoded.userId },
+			envs.JWT_ACCESS_SECRET,
+			envs.JWT_ACCESS_EXPIRES_IN
+		);
+
+		cookie.setAccessToken(res, accessToken);
 	}
 }
 
