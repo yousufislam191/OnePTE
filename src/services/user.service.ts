@@ -17,10 +17,16 @@ class UserService {
 		if (isExist) {
 			throw new HttpError(HttpCode.CONFLICT, 'User already exists');
 		}
+
+		//* if no user is present then make the first user as admin
+		const userCount = await User.count();
+		const isAdmin = userCount === 0 ? 1 : undefined;
+
 		await User.create({
 			name: data.name,
 			email: data.email,
 			password: await hashPassword(data.password),
+			...(isAdmin !== undefined && { isAdmin }), //* it will be applied only if isAdmin value is present
 		});
 	}
 

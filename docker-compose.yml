@@ -16,7 +16,7 @@ services:
       - MYSQL_DATABASE=onepte
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 20s  # Wait 20 seconds between checks
+      interval: 30s  # Wait 20 seconds between checks
       timeout: 10s   # Consider the check failed if it takes longer than 10 seconds
       retries: 10    # After 10 failed attempts, consider the container unhealthy
 
@@ -39,13 +39,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: node-app
-    # restart: always
+    restart: always
     ports:
       - "3001:3001"
     networks:
       - bridge
-    # volumes:
-    #   - .:/usr/src/app
     environment:
       - SERVER_PORT=3001
       - ALLOWED_ORIGINS=http://localhost:3000
